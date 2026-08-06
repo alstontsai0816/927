@@ -337,10 +337,9 @@
                 </div>
             </div>
 
-            <!-- 班級公佈欄 / 今日作業清單 / 行事曆 -->
-            <div class="flex flex-col md:flex-row gap-6 flex-1 min-h-[350px]">
-                <!-- 左半部：大黑板 -->
-                <div class="glass-panel p-6 rounded-3xl shadow-xl flex-1 relative group flex flex-col">
+            <!-- 班級公佈欄 / 今日作業清單 -->
+            <div class="glass-panel p-6 rounded-3xl shadow-xl flex flex-col md:flex-row gap-6 flex-1 min-h-[350px]">
+                <div class="flex-1 relative group flex flex-col">
                     <h3 class="text-md font-bold text-slate-200 mb-3 flex items-center gap-2">
                         <i class="fa-solid fa-bullhorn text-rose-400 animate-pulse"></i>
                         今日重要通知 (大黑板)
@@ -356,42 +355,19 @@
                         class="w-full flex-1 glass-input p-4 rounded-2xl text-sm text-slate-200 placeholder-slate-500 focus:outline-none resize-none focus:ring-2 focus:ring-indigo-500/40 min-h-[220px]"
                         oninput="saveBulletin()"></textarea>
                 </div>
-                
-                <!-- 右半部：作業清單 與 行事曆 -->
-                <div class="w-full md:w-80 flex flex-col gap-6">
-                    
-                    <!-- 今日作業 -->
-                    <div class="glass-panel p-6 rounded-3xl shadow-xl flex-1 flex flex-col">
-                        <h3 class="text-md font-bold text-slate-200 mb-3 flex items-center gap-2">
-                            <i class="fa-solid fa-list-check text-emerald-400"></i>
-                            今日作業
-                        </h3>
-                        <div id="todo-list" class="space-y-2 flex-1 overflow-y-auto no-scrollbar pr-1 min-h-[120px]">
-                        </div>
-                        <div class="mt-4 flex gap-2">
-                            <input type="text" id="todo-input" placeholder="新增作業..." class="flex-1 glass-input py-1.5 px-3 rounded-xl text-xs text-white focus:outline-none">
-                            <button type="button" id="todo-add-btn" onclick="checkTeacherAccess(addTodo, 'todos')" class="bg-indigo-600 hover:bg-indigo-500 text-white px-3 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1">
-                                <i class="fa-solid fa-plus text-[10px]"></i> 新增
-                            </button>
-                        </div>
+                <div class="w-full md:w-80 flex flex-col">
+                    <h3 class="text-md font-bold text-slate-200 mb-3 flex items-center gap-2">
+                        <i class="fa-solid fa-list-check text-emerald-400"></i>
+                        今日作業
+                    </h3>
+                    <div id="todo-list" class="space-y-2 flex-1 overflow-y-auto no-scrollbar pr-1 min-h-[170px]">
                     </div>
-
-                    <!-- 班級重要行事曆 -->
-                    <div class="glass-panel p-6 rounded-3xl shadow-xl flex-1 flex flex-col border-t-4 border-amber-500">
-                        <div class="flex justify-between items-center mb-3">
-                            <h3 class="text-md font-bold text-slate-200 flex items-center gap-2">
-                                <i class="fa-regular fa-calendar text-amber-400"></i>
-                                重要行事曆
-                            </h3>
-                            <button type="button" onclick="checkTeacherAccess(openAddEventModal, 'bulletin')" class="text-xs text-slate-400 hover:text-white transition-colors">
-                                <i class="fa-solid fa-plus"></i>
-                            </button>
-                        </div>
-                        <div id="calendar-list" class="space-y-3 flex-1 overflow-y-auto no-scrollbar pr-1 min-h-[100px]">
-                            <!-- 動態繪製行事曆事件 -->
-                        </div>
+                    <div class="mt-4 flex gap-2">
+                        <input type="text" id="todo-input" placeholder="新增作業..." class="flex-1 glass-input py-1.5 px-3 rounded-xl text-xs text-white focus:outline-none">
+                        <button type="button" id="todo-add-btn" onclick="checkTeacherAccess(addTodo, 'todos')" class="bg-indigo-600 hover:bg-indigo-500 text-white px-3 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1">
+                            <i class="fa-solid fa-plus text-[10px]"></i> 新增
+                        </button>
                     </div>
-
                 </div>
             </div>
 
@@ -399,7 +375,7 @@
 
     </main>
 
-    <!-- 右下角浮動按鈕：問題回報與許願池 (防重整設為 type=button) -->
+    <!-- 右下角浮動按鈕：問題回報與許願池 -->
     <button type="button" onclick="openFeedbackModal()" class="fixed bottom-6 right-6 z-40 bg-gradient-to-r from-sky-500 to-blue-600 text-white p-3.5 rounded-full shadow-[0_0_20px_rgba(56,189,248,0.4)] hover:scale-110 hover:shadow-[0_0_25px_rgba(56,189,248,0.6)] transition-all flex items-center gap-2">
         <i class="fa-solid fa-comment-dots text-xl"></i>
         <span class="text-sm font-bold hidden sm:inline px-1">問題與許願</span>
@@ -431,35 +407,6 @@
             <div class="flex-1 overflow-y-auto no-scrollbar border-t border-slate-800 pt-4">
                 <h4 class="text-xs font-bold text-slate-400 mb-3 tracking-widest"><i class="fa-solid fa-clock rotate-180"></i> 歷史回報與回覆紀錄</h4>
                 <div id="feedback-list-container" class="space-y-4">
-                    <!-- 由 JS 動態繪製 -->
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- 模組視窗：新增行事曆事件 -->
-    <div id="add-event-modal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 flex items-center justify-center opacity-0 pointer-events-none transition-all duration-300">
-        <div class="glass-panel p-6 rounded-3xl w-full max-w-sm border border-slate-700 mx-4">
-            <h3 class="text-lg font-bold text-white mb-4 flex items-center gap-2">
-                <i class="fa-regular fa-calendar-plus text-amber-400"></i>
-                新增重要行事曆
-            </h3>
-            <div class="space-y-4">
-                <div>
-                    <label class="block text-xs text-slate-400 mb-1">事件日期</label>
-                    <input type="date" id="new-event-date" class="w-full glass-input py-2 px-3 rounded-xl text-sm text-white focus:outline-none">
-                </div>
-                <div>
-                    <label class="block text-xs text-slate-400 mb-1">事件內容</label>
-                    <input type="text" id="new-event-title" placeholder="例如：期中考、校慶補假..." class="w-full glass-input py-2 px-3 rounded-xl text-sm text-white focus:outline-none">
-                </div>
-                <div class="flex gap-2 pt-2">
-                    <button type="button" onclick="closeAddEventModal()" class="flex-1 bg-slate-800 hover:bg-slate-700 text-slate-300 py-2 rounded-xl text-xs font-bold transition-all">
-                        取消
-                    </button>
-                    <button type="button" onclick="saveNewEvent()" class="flex-1 bg-amber-600 hover:bg-amber-500 text-white py-2 rounded-xl text-xs font-bold transition-all">
-                        新增
-                    </button>
                 </div>
             </div>
         </div>
@@ -583,14 +530,12 @@
             </div>
             
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
-                <!-- 左側：現有帳號列表 -->
                 <div class="lg:col-span-7 flex flex-col gap-4">
                     <h4 class="text-xs font-bold text-indigo-400 uppercase tracking-wider"><i class="fa-solid fa-list mr-1"></i> 現有帳號與權限配給</h4>
                     <div id="passwords-accounts-list" class="space-y-3 max-h-[40vh] overflow-y-auto no-scrollbar pr-1">
                     </div>
                 </div>
 
-                <!-- 右側：新增密碼區 -->
                 <div class="lg:col-span-5 bg-slate-950/40 p-4 rounded-2xl border border-slate-850 space-y-4">
                     <h4 class="text-xs font-bold text-pink-400 uppercase tracking-wider"><i class="fa-solid fa-user-plus mr-1"></i> 快速新增管理密碼</h4>
                     <p class="text-[10px] text-slate-500 leading-tight">💡 提示：若您建立一組「完全不勾選任何權限」的帳號，該帳號登入後將僅能檢視網頁，並使用右下角回報功能 (一般學生帳號)。</p>
@@ -635,11 +580,9 @@
                     </div>
                 </div>
 
-                <!-- 底部：操作紀錄區塊 (僅主管理員可見) -->
                 <div id="admin-audit-section" class="lg:col-span-12 mt-2 hidden border-t border-slate-800 pt-6">
                     <h4 class="text-xs font-bold text-amber-400 uppercase tracking-wider mb-3"><i class="fa-solid fa-clock-rotate-left mr-1"></i> 網頁修改紀錄 (僅主管理員可見)</h4>
                     <div id="audit-logs-container" class="bg-slate-900/60 p-4 rounded-2xl border border-slate-800 h-40 overflow-y-auto no-scrollbar space-y-2 text-xs">
-                        <!-- 由 JS 動態生成紀錄 -->
                     </div>
                 </div>
 
@@ -667,7 +610,6 @@
                 <div>
                     <label class="block text-xs text-slate-400 mb-1">您的帳號名稱</label>
                     <div id="own-current-label-display" class="w-full bg-slate-950/60 border border-slate-800/80 py-2.5 px-3 rounded-xl text-sm text-slate-400 select-none">
-                        <!-- 由 JS 填入目前的角色名稱 -->
                     </div>
                 </div>
                 <div>
@@ -690,14 +632,13 @@
         </div>
     </div>
 
-    <!-- 內建輕量自訂訊息提示 (調整至右上角防遮擋) -->
-    <div id="toast" class="fixed top-6 right-6 glass-panel py-3 px-6 rounded-2xl shadow-2xl flex items-center gap-2 text-sm text-emerald-400 border border-emerald-500/30 transform -translate-y-20 opacity-0 transition-all duration-300 z-[100]">
+    <!-- 內建輕量自訂訊息提示 -->
+    <div id="toast" class="fixed top-6 right-6 glass-panel py-3 px-6 rounded-2xl shadow-2xl flex items-center gap-2 text-sm text-emerald-400 border border-emerald-500/30 transform -translate-y-20 opacity-0 transition-all duration-300 z-50">
         <i class="fa-solid fa-circle-check"></i>
         <span id="toast-message">儲存成功！</span>
     </div>
 
     <script>
-        // 預設快速連結資料
         const defaultLinks = [
             { id: 1, title: "新北中山國中官網", url: "https://www.csjh.ntpc.edu.tw/", icon: "fa-school", color: "indigo" },
             { id: 2, title: "校務行政系統", url: "https://esa.ntpc.edu.tw/central/theme/01/index.html", icon: "fa-computer", color: "emerald" },
@@ -707,7 +648,6 @@
             { id: 6, title: "均一教育平台", url: "https://www.junyiacademy.org/", icon: "fa-pen-clip", color: "rose" }
         ];
 
-        // 預設課表資料 (五天八節課)
         const defaultSchedule = {
             "1-1": "童軍/家政", "1-2": "自然", "1-3": "本土語", "1-4": "數學", "1-5": "班會",
             "2-1": "童軍/家政", "2-2": "國文", "2-3": "英文", "2-4": "健康", "2-5": "史話連篇",
@@ -719,133 +659,50 @@
             "8-1": "歷/理", "8-2": "X", "8-3": "數/國", "8-4": "英/社", "8-5": "X"
         };
 
-        // 預設今日作業
         const defaultTodos = [
             { id: 1, text: "帶段考複習講義", completed: false },
             { id: 2, text: "繳交班費回條", completed: false }
-        ];
-
-        // 預設行事曆
-        const defaultEvents = [
-            { id: 1, date: "2026-06-15", title: "國中教育會考" }
         ];
 
         let selectedLinkColor = "indigo";
         let selectedLinkIcon = "fa-book";
         let isEditScheduleMode = false;
         let isDeleteLinkMode = false;
-        let drawInterval;
-        let countdownInterval;
 
-        // 教師管理與權限系統控制變數
         let activePermissions = []; 
         let currentRole = "";        
         let currentAccountId = "";   
         let pendingAction = null;    
         let pendingPermission = null;
-
-        // 建立一個存檔小幫手，取代直接操作 localStorage
-        function saveData(key, value) {
-            let strValue = typeof value === 'string' ? value : JSON.stringify(value);
-            localStorage.setItem(key, strValue);
-            
-            // 如果雲端準備好了，而且不是正在從雲端抓資料下來，就把變更傳上雲端
-            if (!isSyncing && isCloudReady) {
-                let cloudKey = key.replace('class827_', '');
-                pushToCloud(cloudKey, value);
-            }
-        }
-
-        // ================= 修改紀錄 (Audit Log) 系統 =================
-        function logAction(actionDesc) {
-            if (!currentRole) return; // 如果沒登入就不紀錄
-
-            let logs = JSON.parse(localStorage.getItem('class827_audit_logs')) || [];
-            
-            const now = new Date();
-            const timeString = `${now.getFullYear()}/${String(now.getMonth() + 1).padStart(2, '0')}/${String(now.getDate()).padStart(2, '0')} ${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
-            
-            logs.unshift({
-                id: Date.now(),
-                author: currentRole,
-                action: actionDesc,
-                time: timeString
-            });
-            
-            // 只保留最近 50 筆紀錄，避免資料太大
-            if (logs.length > 50) {
-                logs = logs.slice(0, 50);
-            }
-            
-            saveData('class827_audit_logs', logs);
-            
-            // 如果當下是主管理員，順便更新畫面
-            if (currentAccountId === 'master') {
-                renderAuditLogs();
-            }
-        }
-
-        function renderAuditLogs() {
-            const container = document.getElementById('audit-logs-container');
-            const section = document.getElementById('admin-audit-section');
-            if (!container || !section) return;
-
-            // 只有主管理員可以看
-            if (currentAccountId !== 'master') {
-                section.classList.add('hidden');
-                return;
-            }
-            
-            section.classList.remove('hidden');
-            const logs = JSON.parse(localStorage.getItem('class827_audit_logs')) || [];
-            container.innerHTML = "";
-
-            if (logs.length === 0) {
-                container.innerHTML = `<div class="text-slate-500 italic text-center py-4">目前沒有任何修改紀錄。</div>`;
-                return;
-            }
-
-            logs.forEach(log => {
-                const item = document.createElement('div');
-                item.className = "flex justify-between items-center border-b border-slate-800/50 pb-2 mb-2 last:border-0 last:pb-0 last:mb-0";
-                item.innerHTML = `
-                    <div class="flex items-center gap-2 w-full">
-                        <span class="text-[10px] bg-slate-800 text-slate-300 px-2 py-0.5 rounded whitespace-nowrap">${log.time}</span>
-                        <span class="font-bold text-sky-400 whitespace-nowrap">${log.author}</span>
-                        <span class="text-slate-200 truncate">${log.action}</span>
-                    </div>
-                `;
-                container.appendChild(item);
-            });
-        }
-        // ==========================================================
+        let countdownInterval;
 
         window.onload = function() {
-            // 加入安全防護網：確保任何一個功能報錯，都不會牽連其他功能罷工
-            try { initSession(); } catch(e) { console.error("Session載入異常", e); }
-            try { initPasswords(); } catch(e) { console.error("密碼初始化異常", e); }
-            try { initClock(); } catch(e) { console.error("時鐘初始化異常", e); }
-            try { initSearch(); } catch(e) {}
-            try { renderLinks(); } catch(e) { console.error("連結渲染異常", e); }
-            try { renderSchedule(); } catch(e) { console.error("課表渲染異常", e); }
-            try { initCountdown(); } catch(e) { console.error("倒數計時異常", e); }
-            try { initBulletin(); } catch(e) { console.error("大黑板異常", e); }
-            try { initTodos(); } catch(e) { console.error("作業載入異常", e); }
-            try { initEvents(); } catch(e) { console.error("行事曆異常", e); }
-            try { initFeedbacks(); } catch(e) { console.error("回報系統異常", e); }
-            try { highlightCurrentDay(); } catch(e) {}
-            try { updateTeacherStatusUI(); } catch(e) {}
+            initPasswords();
+            initClock();
+            renderLinks();
+            renderSchedule();
+            initCountdown();
+            initBulletin();
+            initTodos();
+            initFeedbacks();
+            highlightCurrentDay();
+            updateTeacherStatusUI();
             
-            const pwdInput = document.getElementById('teacher-password-input');
-            if(pwdInput) {
-                pwdInput.addEventListener('keypress', function(e) {
-                    if (e.key === 'Enter') {
-                        verifyTeacherPassword();
-                    }
+            document.getElementById('teacher-password-input').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    verifyTeacherPassword();
+                }
+            });
+
+            const overlay = document.getElementById('bulletin-overlay');
+            if(overlay) {
+                overlay.addEventListener('click', function() {
+                    checkTeacherAccess(() => {
+                        document.getElementById('bulletin-text').focus();
+                    }, 'bulletin');
                 });
             }
             
-            // 名人勵志語
             const quotes = [
                 "「成功不是將來才有的，而是從決定去做的那一刻起，持續累積而成。」",
                 "「不要等待機會，而要創造機會。」",
@@ -854,37 +711,48 @@
                 "「827的夥伴們，今天也要打起精神、充滿自信！」",
                 "「凡事盡力而為，過程往往比結果更珍貴。」"
             ];
-            
-            const quoteEl = document.getElementById('daily-quote');
-            if (quoteEl) {
-                quoteEl.textContent = quotes[Math.floor(Math.random() * quotes.length)];
-            }
+            document.getElementById('daily-quote').textContent = quotes[Math.floor(Math.random() * quotes.length)];
 
-            // 啟動雲端連線
+            // 初始化雲端連線
             initCloud();
         };
 
-        // ================= 雲端同步系統 =================
+        // ================= 雲端同步設定 (Firebase) =================
         let db, auth, docRef;
         let isCloudReady = false;
         let isSyncing = false;
 
         async function initCloud() {
             try {
-                if (typeof __firebase_config === 'undefined') return;
-                const firebaseConfig = JSON.parse(__firebase_config);
+                // ✏️ 已經為您填入專屬的 Firebase 設定！
+                const myFirebaseConfig = {
+                    apiKey: "AIzaSyCb6eNsjNf5UZ_aUZ_Jgfi8-pZFe6T93zU",
+                    authDomain: "class-19629.firebaseapp.com",
+                    projectId: "class-19629",
+                    storageBucket: "class-19629.firebasestorage.app",
+                    messagingSenderId: "1015192006319",
+                    appId: "1:1015192006319:web:2dec4a889652031cc5ee5a"
+                };
+
+                const configToUse = (typeof __firebase_config !== 'undefined') ? JSON.parse(__firebase_config) : myFirebaseConfig;
+                
+                if(configToUse.apiKey === "請在這裡填寫您的_apiKey" || !configToUse.apiKey) {
+                    console.log("尚未填寫 Firebase 設定，目前以單機模式運作。");
+                    return;
+                }
                 
                 const { initializeApp } = await import("https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js");
                 const { getAuth, signInWithCustomToken, signInAnonymously, onAuthStateChanged } = await import("https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js");
-                const { getFirestore, doc, setDoc, onSnapshot } = await import("https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js");
+                const { getFirestore, doc, setDoc, onSnapshot, collection } = await import("https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js");
 
-                const app = initializeApp(firebaseConfig);
+                const app = initializeApp(configToUse);
                 auth = getAuth(app);
                 db = getFirestore(app);
-                const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
                 
-                // 設定全班共用的雲端資料夾路徑
-                docRef = doc(db, 'artifacts', appId, 'public', 'data', 'class827_data', 'shared_state');
+                const appId = typeof __app_id !== 'undefined' ? __app_id : 'class827';
+                
+                const colRef = collection(db, 'artifacts', appId, 'public', 'data', 'class827_sync');
+                docRef = doc(colRef, 'shared_state');
 
                 if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
                     await signInWithCustomToken(auth, __initial_auth_token);
@@ -904,15 +772,15 @@
                             if (snapshot.exists()) {
                                 syncFromCloud(snapshot.data());
                             } else {
-                                pushAllToCloud(); // 第一次執行，把本機資料傳上去建立檔案
+                                pushAllToCloud(); 
                             }
                         }, (error) => {
-                            console.error("雲端連線中斷", error);
+                            console.error("雲端連線異常", error);
                         });
                     }
                 });
             } catch(e) {
-                console.log("目前為單機模式運作中。");
+                console.log("無法連接到雲端，將維持單機模式運作。", e);
             }
         }
 
@@ -933,9 +801,7 @@
                 links: JSON.parse(localStorage.getItem('class827_links')) || defaultLinks,
                 schedule: JSON.parse(localStorage.getItem('class827_schedule')) || defaultSchedule,
                 todos: JSON.parse(localStorage.getItem('class827_todos')) || defaultTodos,
-                events: JSON.parse(localStorage.getItem('class827_events')) || defaultEvents,
                 feedbacks: JSON.parse(localStorage.getItem('class827_feedbacks')) || [],
-                audit_logs: JSON.parse(localStorage.getItem('class827_audit_logs')) || [],
                 bulletin: localStorage.getItem('class827_bulletin') || "",
                 countdown: {
                     title: localStorage.getItem('class827_countdown_title') || "116年國中教育會考",
@@ -948,17 +814,14 @@
         }
 
         function syncFromCloud(data) {
-            isSyncing = true; // 鎖住，避免收到更新又傳回去
+            isSyncing = true; 
             try {
                 if (data.links) { localStorage.setItem('class827_links', JSON.stringify(data.links)); renderLinks(); }
                 if (data.schedule) { localStorage.setItem('class827_schedule', JSON.stringify(data.schedule)); renderSchedule(); }
                 if (data.todos) { localStorage.setItem('class827_todos', JSON.stringify(data.todos)); renderTodos(); }
-                if (data.events) { localStorage.setItem('class827_events', JSON.stringify(data.events)); renderEvents(); }
                 if (data.feedbacks) { localStorage.setItem('class827_feedbacks', JSON.stringify(data.feedbacks)); renderFeedbacks(); }
-                if (data.audit_logs) { localStorage.setItem('class827_audit_logs', JSON.stringify(data.audit_logs)); if(currentAccountId === 'master') renderAuditLogs(); }
                 if (data.passwords) { 
                     localStorage.setItem('class827_passwords_list', JSON.stringify(data.passwords)); 
-                    renderPasswordsList(); 
                 }
                 if (data.countdown) {
                     localStorage.setItem('class827_countdown_title', data.countdown.title);
@@ -976,41 +839,29 @@
                     }
                 }
             } catch(e) {
-                console.error("同步解析發生錯誤", e);
+                console.error("同步解析錯誤", e);
             } finally {
-                isSyncing = false; // 解除鎖定
-            }
-        }
-        // =================================================
-
-        // 登入狀態持久化 (防止重新整理後登出)
-        function initSession() {
-            const sessionData = sessionStorage.getItem('class827_session');
-            if(sessionData) {
-                const session = JSON.parse(sessionData);
-                currentRole = session.role || "";
-                currentAccountId = session.accountId || "";
-                activePermissions = session.permissions || [];
+                isSyncing = false; 
             }
         }
 
-        function saveSession() {
-            sessionStorage.setItem('class827_session', JSON.stringify({
-                role: currentRole,
-                accountId: currentAccountId,
-                permissions: activePermissions
-            }));
+        // 取代原有的 localStorage.setItem，加入自動上傳功能
+        function saveData(key, value) {
+            let strValue = typeof value === 'string' ? value : JSON.stringify(value);
+            localStorage.setItem(key, strValue);
+            
+            if (!isSyncing && isCloudReady) {
+                let cloudKey = key.replace('class827_', '');
+                pushToCloud(cloudKey, value);
+            }
         }
+        // ==========================================================
 
         function initPasswords() {
-            let list = null;
-            try {
-                list = JSON.parse(localStorage.getItem('class827_passwords_list'));
-            } catch(e) { list = null; }
-            
+            let list = JSON.parse(localStorage.getItem('class827_passwords_list'));
             const oldSinglePw = localStorage.getItem('class827_admin_password');
 
-            if (!Array.isArray(list)) {
+            if (!list) {
                 list = [
                     {
                         id: "master",
@@ -1039,15 +890,8 @@
                     if (!hasAll) {
                         master.permissions = requiredPerms;
                     }
-                } else {
-                    list.unshift({
-                        id: "master",
-                        label: "超級管理員 (主密碼)",
-                        password: "5207101327",
-                        permissions: ["schedule", "links", "countdown", "bulletin", "todos", "passwords", "feedback_admin"]
-                    });
+                    localStorage.setItem('class827_passwords_list', JSON.stringify(list));
                 }
-                localStorage.setItem('class827_passwords_list', JSON.stringify(list));
             }
         }
 
@@ -1058,95 +902,78 @@
             const todoInput = document.getElementById('todo-input');
             const todoBtn = document.getElementById('todo-add-btn');
 
-            if (activePermissions.length > 0 || currentRole !== "") {
+            if (activePermissions.length > 0) {
                 let adminBtn = "";
                 if (activePermissions.includes('passwords')) {
                     adminBtn = `
                         <span class="text-slate-700 mx-1">|</span>
-                        <button type="button" onclick="openPasswordsManagerModal()" class="text-indigo-400 hover:text-indigo-300 font-bold transition-colors flex items-center gap-1">
-                            <i class="fa-solid fa-shield-halved text-emerald-400"></i>安全中心
+                        <button onclick="openPasswordsManagerModal()" class="text-indigo-400 hover:text-indigo-300 font-bold transition-colors flex items-center gap-1">
+                            <i class="fa-solid fa-shield-halved text-emerald-400"></i>密碼管理
                         </button>
                     `;
                 }
 
-                if (panel) {
-                    panel.innerHTML = `
-                        <span class="flex items-center gap-1.5 text-emerald-400 font-bold">
-                            <i class="fa-solid fa-user-shield animate-pulse"></i> 已登入: ${currentRole}
-                        </span>
-                        <span class="text-slate-700 mx-1">|</span>
-                        <button type="button" onclick="openChangeOwnProfileModal()" class="text-sky-400 hover:text-sky-300 font-bold transition-colors flex items-center gap-1">
-                            <i class="fa-solid fa-key text-sky-400"></i>修改密碼
-                        </button>
-                        ${adminBtn}
-                        <span class="text-slate-700 mx-1">|</span>
-                        <button type="button" onclick="lockTeacherMode()" class="text-rose-400 hover:text-rose-300 font-semibold transition-colors flex items-center gap-1">
-                            <i class="fa-solid fa-power-off"></i>登出
-                        </button>
-                    `;
-                }
+                panel.innerHTML = `
+                    <span class="flex items-center gap-1.5 text-emerald-400 font-bold">
+                        <i class="fa-solid fa-user-shield animate-pulse"></i> 已登入: ${currentRole}
+                    </span>
+                    <span class="text-slate-700 mx-1">|</span>
+                    <button onclick="openChangeOwnProfileModal()" class="text-sky-400 hover:text-sky-300 font-bold transition-colors flex items-center gap-1">
+                        <i class="fa-solid fa-key text-sky-400"></i>修改密碼
+                    </button>
+                    ${adminBtn}
+                    <span class="text-slate-700 mx-1">|</span>
+                    <button onclick="lockTeacherMode()" class="text-rose-400 hover:text-rose-300 font-semibold transition-colors flex items-center gap-1">
+                        <i class="fa-solid fa-power-off"></i>登出
+                    </button>
+                `;
 
                 if (activePermissions.includes('bulletin')) {
-                    if (bulletinOverlay) bulletinOverlay.classList.add('hidden');
-                    if (bulletinText) {
-                        bulletinText.removeAttribute('readonly');
-                        bulletinText.className = "w-full flex-1 glass-input p-4 rounded-2xl text-sm text-slate-200 placeholder-slate-500 focus:outline-none resize-none focus:ring-2 focus:ring-indigo-500/40 border-emerald-500/30 min-h-[220px]";
-                    }
+                    bulletinOverlay.classList.add('hidden');
+                    bulletinText.removeAttribute('readonly');
+                    bulletinText.className = "w-full flex-1 glass-input p-4 rounded-2xl text-sm text-slate-200 placeholder-slate-500 focus:outline-none resize-none focus:ring-2 focus:ring-indigo-500/40 border-emerald-500/30 min-h-[220px]";
                 } else {
-                    if (bulletinOverlay) bulletinOverlay.classList.remove('hidden');
-                    if (bulletinText) {
-                        bulletinText.setAttribute('readonly', 'true');
-                        bulletinText.className = "w-full flex-1 glass-input p-4 rounded-2xl text-sm text-slate-500 placeholder-slate-600 focus:outline-none resize-none cursor-not-allowed select-none bg-slate-950/20 min-h-[220px]";
-                    }
-                }
-
-                if (activePermissions.includes('todos')) {
-                    if (todoInput) {
-                        todoInput.removeAttribute('disabled');
-                        todoInput.placeholder = "新增作業...";
-                    }
-                    if (todoBtn) todoBtn.className = "bg-indigo-600 hover:bg-indigo-500 text-white px-3 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1";
-                } else {
-                    if (todoInput) {
-                        todoInput.setAttribute('disabled', 'true');
-                        todoInput.placeholder = "🔒 此密碼不具備權限";
-                    }
-                    if (todoBtn) todoBtn.className = "bg-slate-800 text-slate-500 cursor-not-allowed px-3 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1";
-                }
-
-            } else {
-                if (panel) {
-                    panel.innerHTML = `
-                        <span class="flex items-center gap-1 text-slate-400">
-                            <i class="fa-solid fa-lock text-slate-500"></i> 學生瀏覽模式
-                        </span>
-                        <span class="text-slate-700 mx-1">|</span>
-                        <button type="button" onclick="openTeacherLoginModal()" class="text-indigo-400 hover:text-indigo-300 font-bold transition-colors flex items-center gap-1">
-                            <i class="fa-solid fa-key"></i>密碼解鎖
-                        </button>
-                    `;
-                }
-
-                if (bulletinOverlay) bulletinOverlay.classList.remove('hidden');
-                if (bulletinText) {
+                    bulletinOverlay.classList.remove('hidden');
                     bulletinText.setAttribute('readonly', 'true');
                     bulletinText.className = "w-full flex-1 glass-input p-4 rounded-2xl text-sm text-slate-500 placeholder-slate-600 focus:outline-none resize-none cursor-not-allowed select-none bg-slate-950/20 min-h-[220px]";
                 }
-                
-                if (todoInput) {
+
+                if (activePermissions.includes('todos')) {
+                    todoInput.removeAttribute('disabled');
+                    todoInput.placeholder = "新增作業...";
+                    todoBtn.className = "bg-indigo-600 hover:bg-indigo-500 text-white px-3 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1";
+                } else {
                     todoInput.setAttribute('disabled', 'true');
-                    todoInput.placeholder = "🔒 解鎖權限後可新增";
+                    todoInput.placeholder = "🔒 此密碼不具備權限";
+                    todoBtn.className = "bg-slate-800 text-slate-500 cursor-not-allowed px-3 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1";
                 }
-                if (todoBtn) todoBtn.className = "bg-slate-800 text-slate-500 cursor-not-allowed px-3 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1";
+
+            } else {
+                panel.innerHTML = `
+                    <span class="flex items-center gap-1 text-slate-400">
+                        <i class="fa-solid fa-lock text-slate-500"></i> 學生瀏覽模式
+                    </span>
+                    <span class="text-slate-700 mx-1">|</span>
+                    <button onclick="openTeacherLoginModal()" class="text-indigo-400 hover:text-indigo-300 font-bold transition-colors flex items-center gap-1">
+                        <i class="fa-solid fa-key"></i>密碼解鎖
+                    </button>
+                `;
+
+                bulletinOverlay.classList.remove('hidden');
+                bulletinText.setAttribute('readonly', 'true');
+                bulletinText.className = "w-full flex-1 glass-input p-4 rounded-2xl text-sm text-slate-500 placeholder-slate-600 focus:outline-none resize-none cursor-not-allowed select-none bg-slate-950/20 min-h-[220px]";
+                
+                todoInput.setAttribute('disabled', 'true');
+                todoInput.placeholder = "🔒 解鎖權限後可新增";
+                todoBtn.className = "bg-slate-800 text-slate-500 cursor-not-allowed px-3 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1";
             }
             renderTodos(); 
-            renderEvents();
         }
 
         function checkTeacherAccess(onSuccessAction, requiredPermission) {
             if (activePermissions.includes(requiredPermission)) {
                 onSuccessAction();
-            } else if (currentRole !== "") {
+            } else if (activePermissions.length > 0) {
                 showToast(`⚠️ 抱歉，目前您的身分【${currentRole}】無權操作此項目！`, "rose-400");
             } else {
                 pendingAction = onSuccessAction;
@@ -1158,16 +985,13 @@
         function openTeacherLoginModal() {
             document.getElementById('teacher-password-input').value = "";
             const modal = document.getElementById('teacher-login-modal');
-            if(modal) modal.classList.remove('opacity-0', 'pointer-events-none');
-            setTimeout(() => {
-                const el = document.getElementById('teacher-password-input');
-                if(el) el.focus();
-            }, 100);
+            modal.classList.remove('opacity-0', 'pointer-events-none');
+            setTimeout(() => document.getElementById('teacher-password-input').focus(), 100);
         }
 
         function closeTeacherLoginModal() {
             const modal = document.getElementById('teacher-login-modal');
-            if(modal) modal.classList.add('opacity-0', 'pointer-events-none');
+            modal.classList.add('opacity-0', 'pointer-events-none');
             pendingAction = null;
             pendingPermission = null;
         }
@@ -1183,13 +1007,11 @@
                 if (matchedAccount.id === "master") {
                     activePermissions = ["schedule", "links", "countdown", "bulletin", "todos", "passwords", "feedback_admin"];
                     matchedAccount.permissions = activePermissions;
-                    localStorage.setItem('class827_passwords_list', JSON.stringify(passwordsList));
+                    saveData('class827_passwords_list', passwordsList);
                 }
                 
                 currentRole = matchedAccount.label;
                 currentAccountId = matchedAccount.id; 
-                
-                saveSession(); // 儲存登入狀態
                 
                 updateTeacherStatusUI();
                 closeTeacherLoginModal();
@@ -1217,7 +1039,6 @@
             activePermissions = [];
             currentRole = "";
             currentAccountId = ""; 
-            sessionStorage.removeItem('class827_session'); // 清除登入狀態
             updateTeacherStatusUI();
             
             if (isEditScheduleMode) toggleEditSchedule();
@@ -1237,21 +1058,18 @@
             document.querySelectorAll('input[type="checkbox"][id^="perm-"]').forEach(cb => cb.checked = false);
             
             renderPasswordsList();
-            renderAuditLogs(); // 順便更新修改紀錄
-            
             const modal = document.getElementById('passwords-manager-modal');
-            if(modal) modal.classList.remove('opacity-0', 'pointer-events-none');
+            modal.classList.remove('opacity-0', 'pointer-events-none');
         }
 
         function closePasswordsManagerModal() {
             const modal = document.getElementById('passwords-manager-modal');
-            if(modal) modal.classList.add('opacity-0', 'pointer-events-none');
+            modal.classList.add('opacity-0', 'pointer-events-none');
         }
 
         function renderPasswordsList() {
             const list = JSON.parse(localStorage.getItem('class827_passwords_list')) || [];
             const container = document.getElementById('passwords-accounts-list');
-            if(!container) return;
             container.innerHTML = "";
 
             list.forEach(acc => {
@@ -1266,7 +1084,7 @@
                         badgesHtml += `<span class="bg-indigo-950/60 text-indigo-400 font-bold px-2 py-0.5 rounded border border-indigo-900/40 text-[10px] mr-1">${translatePermission(p)}</span>`;
                     });
                 } else {
-                    badgesHtml = `<span class="text-slate-500 italic">無任何權限 (一般學生)</span>`;
+                    badgesHtml = `<span class="text-slate-500 italic">無任何權限</span>`;
                 }
 
                 let displayPassword = acc.password;
@@ -1276,7 +1094,7 @@
 
                 const deleteBtnHtml = acc.id === "master"
                     ? `<span class="text-[10px] text-slate-500 font-bold bg-slate-950 py-1 px-2 rounded-lg border border-slate-900">系統主密碼保護</span>`
-                    : `<button type="button" onclick="deletePasswordAccount('${acc.id}')" class="bg-rose-950/40 text-rose-400 hover:bg-rose-900/40 border border-rose-500/20 py-1 px-3 rounded-lg font-bold transition-all flex items-center gap-1">
+                    : `<button onclick="deletePasswordAccount('${acc.id}')" class="bg-rose-950/40 text-rose-400 hover:bg-rose-900/40 border border-rose-500/20 py-1 px-3 rounded-lg font-bold transition-all flex items-center gap-1">
                         <i class="fa-solid fa-trash-can text-[10px]"></i> 刪除
                        </button>`;
 
@@ -1360,28 +1178,19 @@
         }
 
         function openChangeOwnProfileModal() {
-            const labelDisplay = document.getElementById('own-current-label-display');
-            if(labelDisplay) labelDisplay.textContent = currentRole;
-            
-            const pwInput = document.getElementById('own-new-password');
-            if(pwInput) pwInput.value = "";
-            
-            const pwConfirm = document.getElementById('own-new-password-confirm');
-            if(pwConfirm) pwConfirm.value = "";
-            
-            const desc = document.getElementById('change-own-profile-desc');
-            if(desc) desc.textContent = `正在修改【${currentRole}】的登入密碼`;
+            document.getElementById('own-current-label-display').textContent = currentRole;
+            document.getElementById('own-new-password').value = "";
+            document.getElementById('own-new-password-confirm').value = "";
+            document.getElementById('change-own-profile-desc').textContent = `正在修改【${currentRole}】的登入密碼`;
             
             const modal = document.getElementById('change-own-profile-modal');
-            if(modal) {
-                modal.classList.remove('opacity-0', 'pointer-events-none');
-                setTimeout(() => { if(pwInput) pwInput.focus(); }, 100);
-            }
+            modal.classList.remove('opacity-0', 'pointer-events-none');
+            setTimeout(() => document.getElementById('own-new-password').focus(), 100);
         }
 
         function closeChangeOwnProfileModal() {
             const modal = document.getElementById('change-own-profile-modal');
-            if(modal) modal.classList.add('opacity-0', 'pointer-events-none');
+            modal.classList.add('opacity-0', 'pointer-events-none');
         }
 
         function saveOwnProfile() {
@@ -1402,7 +1211,7 @@
 
             const isPwDuplicate = list.some(acc => acc.id !== currentAccountId && acc.password === newPw);
             if (isPwDuplicate) {
-                showToast("❌ 新密碼與現有其他角色的密碼重複，請換一個！", "rose-400");
+                showToast("❌ 新密碼與現有其他角色的密碼重複，請設定不同的密碼！", "rose-400");
                 return;
             }
 
@@ -1422,26 +1231,20 @@
 
         function initClock() {
             function updateClock() {
-                try {
-                    const now = new Date();
-                    const year = now.getFullYear();
-                    const month = String(now.getMonth() + 1).padStart(2, '0');
-                    const date = String(now.getDate()).padStart(2, '0');
-                    const correctedDays = ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六'];
-                    const day = correctedDays[now.getDay()];
-                    
-                    const hours = String(now.getHours()).padStart(2, '0');
-                    const minutes = String(now.getMinutes()).padStart(2, '0');
-                    const seconds = String(now.getSeconds()).padStart(2, '0');
+                const now = new Date();
+                const year = now.getFullYear();
+                const month = String(now.getMonth() + 1).padStart(2, '0');
+                const date = String(now.getDate()).padStart(2, '0');
+                const correctedDays = ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六'];
+                const day = correctedDays[now.getDay()];
+                
+                const hours = String(now.getHours()).padStart(2, '0');
+                const minutes = String(now.getMinutes()).padStart(2, '0');
+                const seconds = String(now.getSeconds()).padStart(2, '0');
 
-                    const dateEl = document.getElementById('current-date');
-                    const dayEl = document.getElementById('current-day');
-                    const timeEl = document.getElementById('current-time');
-                    
-                    if (dateEl) dateEl.textContent = `${year}年${month}月${date}日`;
-                    if (dayEl) dayEl.textContent = day;
-                    if (timeEl) timeEl.textContent = `${hours}:${minutes}:${seconds}`;
-                } catch(e) {}
+                document.getElementById('current-date').textContent = `${year}年${month}月${date}日`;
+                document.getElementById('current-day').textContent = day;
+                document.getElementById('current-time').textContent = `${hours}:${minutes}:${seconds}`;
             }
             updateClock();
             setInterval(updateClock, 1000);
@@ -1476,18 +1279,13 @@
         function initSearch() {}
 
         function renderLinks() {
-            let links;
-            try {
-                links = JSON.parse(localStorage.getItem('class827_links'));
-            } catch(e) { links = null; }
-            
-            if (!Array.isArray(links) || (links.length > 0 && links[0].title === "教育部國語辭典")) {
+            let links = JSON.parse(localStorage.getItem('class827_links'));
+            if (!links || (links.length > 0 && links[0].title === "教育部國語辭典")) {
                 links = defaultLinks;
                 saveData('class827_links', links);
             }
 
             const container = document.getElementById('links-container');
-            if(!container) return;
             container.innerHTML = "";
 
             links.forEach(link => {
@@ -1496,17 +1294,12 @@
                 if (link.color === "rose") colorClass = "bg-rose-950/40 text-rose-400 border-rose-500/20 hover:border-rose-500/50 hover:bg-rose-900/20";
                 if (link.color === "amber") colorClass = "bg-amber-950/40 text-amber-400 border-amber-500/20 hover:border-amber-500/50 hover:bg-amber-900/20";
                 if (link.color === "teal") colorClass = "bg-teal-950/40 text-teal-400 border-teal-500/20 hover:border-teal-500/50 hover:bg-teal-900/20";
-                // 處理新顏色
-                if (link.color === "red") colorClass = "bg-red-950/40 text-red-400 border-red-500/20 hover:border-red-500/50 hover:bg-red-900/20";
-                if (link.color === "yellow") colorClass = "bg-yellow-950/40 text-yellow-400 border-yellow-500/20 hover:border-yellow-500/50 hover:bg-yellow-900/20";
-                if (link.color === "sky") colorClass = "bg-sky-950/40 text-sky-400 border-sky-500/20 hover:border-sky-500/50 hover:bg-sky-900/20";
-                if (link.color === "purple") colorClass = "bg-purple-950/40 text-purple-400 border-purple-500/20 hover:border-purple-500/50 hover:bg-purple-900/20";
 
                 const wrapper = document.createElement('div');
                 wrapper.className = "relative group";
 
                 const deleteBadge = isDeleteLinkMode 
-                    ? `<button type="button" onclick="deleteLink(${link.id})" class="absolute -top-1.5 -right-1.5 bg-rose-600 hover:bg-rose-500 text-white rounded-full w-5 h-5 flex items-center justify-center text-[10px] z-10 shadow-lg animate-bounce">
+                    ? `<button onclick="deleteLink(${link.id})" class="absolute -top-1.5 -right-1.5 bg-rose-600 hover:bg-rose-500 text-white rounded-full w-5 h-5 flex items-center justify-center text-[10px] z-10 shadow-lg animate-bounce">
                         <i class="fa-solid fa-times"></i>
                        </button>`
                     : '';
@@ -1536,7 +1329,6 @@
             let links = JSON.parse(localStorage.getItem('class827_links')) || [];
             links = links.filter(l => l.id !== id);
             saveData('class827_links', links);
-            logAction("刪除了某個常用連結");
             renderLinks();
             showToast("捷徑已成功刪除！");
         }
@@ -1544,34 +1336,27 @@
         function toggleDeleteMode() {
             isDeleteLinkMode = !isDeleteLinkMode;
             const btn = document.getElementById('delete-mode-btn');
-            if(btn) {
-                if (isDeleteLinkMode) {
-                    btn.className = "text-xs px-2.5 py-1 rounded-lg bg-red-600 text-white hover:bg-red-500 transition-colors";
-                    btn.innerHTML = `<i class="fa-solid fa-check mr-1"></i>完成`;
-                } else {
-                    btn.className = "text-xs px-2.5 py-1 rounded-lg bg-red-950/50 border border-red-500/30 text-red-400 hover:bg-red-900/50 transition-colors";
-                    btn.innerHTML = `<i class="fa-solid fa-trash-can mr-1"></i>管理`;
-                }
+            if (isDeleteLinkMode) {
+                btn.className = "text-xs px-2.5 py-1 rounded-lg bg-red-600 text-white hover:bg-red-500 transition-colors";
+                btn.innerHTML = `<i class="fa-solid fa-check mr-1"></i>完成`;
+            } else {
+                btn.className = "text-xs px-2.5 py-1 rounded-lg bg-red-950/50 border border-red-500/30 text-red-400 hover:bg-red-900/50 transition-colors";
+                btn.innerHTML = `<i class="fa-solid fa-trash-can mr-1"></i>管理`;
             }
             renderLinks();
         }
 
         function openAddLinkModal() {
             const modal = document.getElementById('add-link-modal');
-            if(modal) modal.classList.remove('opacity-0', 'pointer-events-none');
-            
-            const titleEl = document.getElementById('new-link-title');
-            if(titleEl) titleEl.value = "";
-            
-            const urlEl = document.getElementById('new-link-url');
-            if(urlEl) urlEl.value = "";
-            
+            modal.classList.remove('opacity-0', 'pointer-events-none');
+            document.getElementById('new-link-title').value = "";
+            document.getElementById('new-link-url').value = "";
             selectLinkStyle('indigo', 'fa-book');
         }
 
         function closeAddLinkModal() {
             const modal = document.getElementById('add-link-modal');
-            if(modal) modal.classList.add('opacity-0', 'pointer-events-none');
+            modal.classList.add('opacity-0', 'pointer-events-none');
         }
 
         function selectLinkStyle(color, icon) {
@@ -1580,9 +1365,7 @@
             document.querySelectorAll('.style-choice-btn').forEach(btn => {
                 btn.className = "style-choice-btn border border-slate-700 bg-slate-950 p-2 rounded-xl text-center";
             });
-            if(event && event.currentTarget) {
-                event.currentTarget.className = `style-choice-btn border border-${color}-500 bg-${color}-950/50 p-2 rounded-xl text-center`;
-            }
+            event.currentTarget.className = `style-choice-btn border border-${color}-500 bg-${color}-950/50 p-2 rounded-xl text-center`;
         }
 
         function saveNewLink() {
@@ -1610,18 +1393,13 @@
             });
 
             saveData('class827_links', links);
-            logAction("新增了常用連結：" + title);
             renderLinks();
             closeAddLinkModal();
             showToast("常用連結新增成功！");
         }
 
         function renderSchedule() {
-            let schedule;
-            try {
-                schedule = JSON.parse(localStorage.getItem('class827_schedule'));
-            } catch(e) { schedule = null; }
-
+            let schedule = JSON.parse(localStorage.getItem('class827_schedule'));
             if (!schedule || schedule["1-1"] === "國文") {
                 schedule = defaultSchedule;
                 saveData('class827_schedule', schedule);
@@ -1660,8 +1438,8 @@
             const btn = document.getElementById('edit-schedule-btn');
 
             if (isEditScheduleMode) {
-                if(btnText) btnText.textContent = "確認儲存";
-                if(btn) btn.className = "text-sm px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold transition-all flex items-center gap-1.5 shadow-lg shadow-emerald-500/20";
+                btnText.textContent = "確認儲存";
+                btn.className = "text-sm px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold transition-all flex items-center gap-1.5 shadow-lg shadow-emerald-500/20";
                 renderSchedule();
             } else {
                 const inputs = document.querySelectorAll('.schedule-input');
@@ -1671,10 +1449,9 @@
                     schedule[key] = input.value.trim();
                 });
                 saveData('class827_schedule', schedule);
-                logAction("修改了班級課表");
 
-                if(btnText) btnText.textContent = "編輯課表";
-                if(btn) btn.className = "text-sm px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold transition-all flex items-center gap-1.5 shadow-lg shadow-indigo-500/20";
+                btnText.textContent = "編輯課表";
+                btn.className = "text-sm px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold transition-all flex items-center gap-1.5 shadow-lg shadow-indigo-500/20";
                 renderSchedule();
                 showToast("課表更新成功！");
             }
@@ -1698,7 +1475,6 @@
             }
         }
 
-        // ================= 隨機抽籤系統 =================
         function startDraw() {
             const maxNum = parseInt(document.getElementById('draw-max-num').value);
             if (isNaN(maxNum) || maxNum < 2) {
@@ -1711,9 +1487,6 @@
             
             btn.disabled = true;
             btn.classList.add('opacity-50', 'cursor-not-allowed');
-            
-            // 將數字直接顯示，移除閃爍動畫的設定，確保字不會消失
-            resultEl.classList.remove('animate-bounce', 'scale-150');
             resultEl.classList.add('rolling-number');
 
             let counter = 0;
@@ -1723,10 +1496,8 @@
                 if (counter > 15) {
                     clearInterval(drawInterval);
                     const finalNum = Math.floor(Math.random() * maxNum) + 1;
-                    
                     resultEl.classList.remove('rolling-number');
-                    resultEl.textContent = finalNum;
-                    resultEl.classList.add('animate-bounce', 'scale-150');
+                    resultEl.innerHTML = `<span class="animate-bounce inline-block scale-150">${finalNum}</span>`;
                     
                     btn.disabled = false;
                     btn.classList.remove('opacity-50', 'cursor-not-allowed');
@@ -1734,252 +1505,29 @@
             }, 100);
         }
 
-        // ================= 行事曆系統 =================
-        function initEvents() {
-            let events;
-            try {
-                events = JSON.parse(localStorage.getItem('class827_events'));
-            } catch(e) { events = null; }
-            if (!Array.isArray(events)) {
-                events = defaultEvents;
-                saveData('class827_events', events);
-            }
-            renderEvents();
-        }
-
-        function renderEvents() {
-            const events = JSON.parse(localStorage.getItem('class827_events')) || [];
-            const container = document.getElementById('calendar-list');
-            if(!container) return;
-            container.innerHTML = "";
-
-            if (!Array.isArray(events) || events.length === 0) {
-                container.innerHTML = `<div class="text-xs text-slate-500 italic text-center py-4">目前沒有重要事件</div>`;
-                return;
-            }
-
-            events.sort((a, b) => new Date(a.date.replace(/-/g, '/')) - new Date(b.date.replace(/-/g, '/')));
-
-            const today = new Date();
-            today.setHours(0, 0, 0, 0);
-
-            events.forEach(evt => {
-                let eventDate = new Date(evt.date.replace(/-/g, '/') + " 00:00:00");
-                if(isNaN(eventDate.getTime())) eventDate = new Date(evt.date); // fallback
-                
-                let dateColor = "text-amber-400";
-                let statusBadge = "";
-
-                if (eventDate < today) {
-                    dateColor = "text-slate-500 line-through";
-                    statusBadge = `<span class="text-[9px] bg-slate-800 text-slate-400 px-1 rounded ml-1">已過期</span>`;
-                } else if (eventDate.getTime() === today.getTime()) {
-                    dateColor = "text-rose-400 font-bold animate-pulse";
-                    statusBadge = `<span class="text-[9px] bg-rose-900/50 text-rose-400 border border-rose-500/20 px-1 rounded ml-1">今天！</span>`;
-                }
-
-                const deleteBtn = activePermissions.includes('bulletin')
-                    ? `<button type="button" onclick="deleteEvent(${evt.id})" class="text-slate-600 hover:text-rose-400 p-1 transition-colors"><i class="fa-solid fa-times"></i></button>`
-                    : `<button type="button" onclick="checkTeacherAccess(()=>deleteEvent(${evt.id}), 'bulletin')" class="text-slate-600 hover:text-rose-400 p-1 transition-colors"><i class="fa-solid fa-times"></i></button>`;
-
-                const item = document.createElement('div');
-                item.className = "flex justify-between items-center bg-slate-950/40 p-2 rounded-xl border border-slate-800/40 text-xs text-slate-200 transition-all";
-                
-                item.innerHTML = `
-                    <div class="flex items-center gap-2 truncate">
-                        <span class="font-mono ${dateColor}">${evt.date.substring(5).replace('-','/')}</span>
-                        <span class="truncate max-w-[140px] ${eventDate < today ? 'text-slate-500' : ''}">${evt.title} ${statusBadge}</span>
-                    </div>
-                    ${deleteBtn}
-                `;
-                container.appendChild(item);
-            });
-        }
-
-        function openAddEventModal() {
-            const modal = document.getElementById('add-event-modal');
-            if(modal) modal.classList.remove('opacity-0', 'pointer-events-none');
-            
-            const titleEl = document.getElementById('new-event-title');
-            if(titleEl) titleEl.value = "";
-            
-            const today = new Date();
-            const yyyy = today.getFullYear();
-            const mm = String(today.getMonth() + 1).padStart(2, '0');
-            const dd = String(today.getDate()).padStart(2, '0');
-            const dateEl = document.getElementById('new-event-date');
-            if(dateEl) dateEl.value = `${yyyy}-${mm}-${dd}`;
-        }
-
-        function closeAddEventModal() {
-            const modal = document.getElementById('add-event-modal');
-            if(modal) modal.classList.add('opacity-0', 'pointer-events-none');
-        }
-
-        function saveNewEvent() {
-            const titleEl = document.getElementById('new-event-title');
-            const dateEl = document.getElementById('new-event-date');
-            if(!titleEl || !dateEl) return;
-            const title = titleEl.value.trim();
-            const date = dateEl.value;
-
-            if (!title || !date) {
-                showToast("請填寫完整的日期與事件內容！", "rose-400");
-                return;
-            }
-
-            let events = JSON.parse(localStorage.getItem('class827_events')) || [];
-            const newId = events.length > 0 ? Math.max(...events.map(e => e.id)) + 1 : 1;
-
-            events.push({
-                id: newId,
-                date: date,
-                title: title
-            });
-
-            saveData('class827_events', events);
-            logAction("新增了行事曆：" + title);
-            renderEvents();
-            closeAddEventModal();
-            showToast("行事曆新增成功！");
-        }
-
-        function deleteEvent(id) {
-            let events = JSON.parse(localStorage.getItem('class827_events')) || [];
-            events = events.filter(e => e.id !== id);
-            saveData('class827_events', events);
-            logAction("刪除了行事曆事件");
-            renderEvents();
-            showToast("事件已刪除！");
-        }
-
-        // ================= 倒數計時 =================
-        function initCountdown() {
-            let targetTitle = localStorage.getItem('class827_countdown_title');
-            let targetDateStr = localStorage.getItem('class827_countdown_date');
-
-            if (!targetDateStr || targetTitle === "距離定期考查二" || targetTitle === "距離段考還有" || targetTitle === "距離段考" || targetTitle !== "116年國中教育會考") {
-                targetTitle = "116年國中教育會考";
-                targetDateStr = "2027-05-15";
-                localStorage.setItem('class827_countdown_title', targetTitle);
-                localStorage.setItem('class827_countdown_date', targetDateStr);
-            }
-
-            const titleEl = document.getElementById('countdown-title');
-            const targetEventTitleEl = document.getElementById('target-event-title');
-            const targetEventDateEl = document.getElementById('target-event-date');
-            
-            if (titleEl) titleEl.textContent = `${targetTitle} 還有`;
-            if (targetEventTitleEl) targetEventTitleEl.value = targetTitle;
-            if (targetEventDateEl) targetEventDateEl.value = targetDateStr;
-
-            startCountdown(targetDateStr);
-        }
-
-        function startCountdown(dateStr) {
-            if (countdownInterval) clearInterval(countdownInterval);
-
-            function updateTime() {
-                try {
-                    const cleanDateStr = dateStr.replace(/-/g, '/');
-                    const target = new Date(cleanDateStr + " 00:00:00");
-                    const now = new Date();
-                    let diff = target - now;
-
-                    const daysEl = document.getElementById('countdown-days');
-                    const hoursEl = document.getElementById('countdown-hours');
-                    const minutesEl = document.getElementById('countdown-minutes');
-                    const secondsEl = document.getElementById('countdown-seconds');
-                    
-                    if (!daysEl || !hoursEl || !minutesEl || !secondsEl) return;
-
-                    if (isNaN(diff) || diff <= 0) {
-                        daysEl.textContent = "00";
-                        hoursEl.textContent = "00";
-                        minutesEl.textContent = "00";
-                        secondsEl.textContent = "00";
-                        return;
-                    }
-
-                    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-                    const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                    const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-                    const seconds = Math.floor((diff % (1000 * 60)) / 1000);
-
-                    daysEl.textContent = String(days).padStart(2, '0');
-                    hoursEl.textContent = String(hours).padStart(2, '0');
-                    minutesEl.textContent = String(minutes).padStart(2, '0');
-                    secondsEl.textContent = String(seconds).padStart(2, '0');
-                } catch(e) {}
-            }
-            updateTime();
-            countdownInterval = setInterval(updateTime, 1000);
-        }
-
-        function openCountdownModal() {
-            const modal = document.getElementById('countdown-modal');
-            if(modal) modal.classList.remove('opacity-0', 'pointer-events-none');
-        }
-
-        function closeCountdownModal() {
-            const modal = document.getElementById('countdown-modal');
-            if(modal) modal.classList.add('opacity-0', 'pointer-events-none');
-        }
-
-        function saveCountdownConfig() {
-            const title = document.getElementById('target-event-title').value.trim();
-            const date = document.getElementById('target-event-date').value;
-
-            if (!title || !date) {
-                showToast("請填寫事件名稱與正確日期！", "rose-400");
-                return;
-            }
-
-            localStorage.setItem('class827_countdown_title', title);
-            localStorage.setItem('class827_countdown_date', date);
-            
-            // 手動觸發雲端儲存 (因為這筆資料被我們合併成一個物件)
-            if (!isSyncing && isCloudReady) {
-                pushToCloud('countdown', { title: title, date: date });
-            }
-            logAction("修改了倒數計時目標：" + title);
-
-            const titleEl = document.getElementById('countdown-title');
-            if(titleEl) titleEl.textContent = `${title} 還有`;
-            startCountdown(date);
-            closeCountdownModal();
-            showToast("倒數目標已更新！");
-        }
-
+        let bulletinTimeout;
         function initBulletin() {
             const savedText = localStorage.getItem('class827_bulletin') || "";
-            const bulletinEl = document.getElementById('bulletin-text');
-            if(bulletinEl) bulletinEl.value = savedText;
+            document.getElementById('bulletin-text').value = savedText;
         }
 
-        let bulletinTimeout;
         function saveBulletin() {
             if (!activePermissions.includes('bulletin')) return;
-            const bulletinEl = document.getElementById('bulletin-text');
-            if(bulletinEl) {
-                const text = bulletinEl.value;
-                localStorage.setItem('class827_bulletin', text);
-                
-                // 等停止打字 1 秒後再上傳雲端，避免卡頓
-                clearTimeout(bulletinTimeout);
-                bulletinTimeout = setTimeout(() => {
-                    if (!isSyncing && isCloudReady) pushToCloud('bulletin', text);
-                    logAction("更新了大黑板公告");
-                }, 1000);
-            }
+            const text = document.getElementById('bulletin-text').value;
+            localStorage.setItem('class827_bulletin', text);
+            
+            // 延遲更新到雲端避免頻繁讀寫
+            clearTimeout(bulletinTimeout);
+            bulletinTimeout = setTimeout(() => {
+                if (!isSyncing && isCloudReady) {
+                    pushToCloud('bulletin', text);
+                }
+            }, 1500);
         }
 
         function initTodos() {
-            let todos;
-            try {
-                todos = JSON.parse(localStorage.getItem('class827_todos'));
-            } catch(e) { todos = null; }
-            if (!Array.isArray(todos)) {
+            let todos = JSON.parse(localStorage.getItem('class827_todos'));
+            if (!todos) {
                 todos = defaultTodos;
                 saveData('class827_todos', todos);
             }
@@ -1989,11 +1537,10 @@
         function renderTodos() {
             const todos = JSON.parse(localStorage.getItem('class827_todos')) || [];
             const container = document.getElementById('todo-list');
-            if(!container) return;
             container.innerHTML = "";
 
-            if (!Array.isArray(todos) || todos.length === 0) {
-                container.innerHTML = `<div class="text-xs text-slate-500 italic text-center py-8">目前沒有作業或待辦事項！</div>`;
+            if (todos.length === 0) {
+                container.innerHTML = `<div class="text-xs text-slate-500 italic text-center py-8">目前沒有作業！</div>`;
                 return;
             }
 
@@ -2017,7 +1564,7 @@
                         <i class="fa-regular ${iconClass} text-sm transition-transform active:scale-95"></i>
                         <span class="truncate max-w-[180px]">${todo.text}</span>
                     </div>
-                    <button type="button" onclick="${deleteActionStr}" class="text-slate-500 hover:text-rose-400 p-1 transition-colors">
+                    <button onclick="${deleteActionStr}" class="text-slate-500 hover:text-rose-400 p-1 transition-colors">
                         <i class="fa-solid fa-trash-can"></i>
                     </button>
                 `;
@@ -2027,7 +1574,6 @@
 
         function addTodo() {
             const input = document.getElementById('todo-input');
-            if(!input) return;
             const text = input.value.trim();
 
             if (!text) return;
@@ -2042,17 +1588,15 @@
             });
 
             saveData('class827_todos', todos);
-            logAction("新增了今日作業：" + text);
             input.value = "";
             renderTodos();
-            showToast("新增待辦作業！");
+            showToast("新增作業！");
         }
 
         function toggleTodo(id) {
             let todos = JSON.parse(localStorage.getItem('class827_todos')) || [];
             todos = todos.map(t => t.id === id ? { ...t, completed: !t.completed } : t);
             saveData('class827_todos', todos);
-            logAction("更改了作業完成狀態");
             renderTodos();
         }
 
@@ -2060,7 +1604,6 @@
             let todos = JSON.parse(localStorage.getItem('class827_todos')) || [];
             todos = todos.filter(t => t.id !== id);
             saveData('class827_todos', todos);
-            logAction("刪除了今日作業");
             renderTodos();
             showToast("作業已被移除！");
         }
@@ -2068,10 +1611,7 @@
         // ================= 問題回報與許願池系統 =================
 
         function initFeedbacks() {
-            let feedbacks;
-            try {
-                feedbacks = JSON.parse(localStorage.getItem('class827_feedbacks'));
-            } catch(e) { feedbacks = null; }
+            let feedbacks = JSON.parse(localStorage.getItem('class827_feedbacks'));
             if (!Array.isArray(feedbacks)) {
                 feedbacks = []; 
                 saveData('class827_feedbacks', feedbacks);
@@ -2128,7 +1668,6 @@
             });
 
             saveData('class827_feedbacks', feedbacks);
-            logAction("送出了一則問題/許願");
             input.value = ""; 
             renderFeedbacks();
             showToast("🎉 已成功送出！我們會盡快回覆。", "sky-400");
@@ -2154,7 +1693,6 @@
             });
 
             saveData('class827_feedbacks', feedbacks);
-            logAction("修改或回覆了學生的提問");
             renderFeedbacks();
             showToast("✅ 回覆已更新！");
         }
@@ -2166,18 +1704,15 @@
             }
         }
         
-        // --- 新增：刪除提問 ---
         function deleteFeedback(id) {
             if (!confirm("確定要刪除這筆問題/許願嗎？(刪除後無法復原)")) return;
             let feedbacks = JSON.parse(localStorage.getItem('class827_feedbacks')) || [];
             feedbacks = feedbacks.filter(fb => fb.id !== id);
             saveData('class827_feedbacks', feedbacks);
-            logAction("刪除了一筆提問與許願");
             renderFeedbacks();
             showToast("已刪除該筆提問！");
         }
 
-        // --- 新增：單獨刪除回覆 ---
         function deleteReply(id) {
             if (!confirm("確定要刪除這則回覆嗎？")) return;
             let feedbacks = JSON.parse(localStorage.getItem('class827_feedbacks')) || [];
@@ -2188,7 +1723,6 @@
                 return fb;
             });
             saveData('class827_feedbacks', feedbacks);
-            logAction("刪除了一則問題回覆");
             renderFeedbacks();
             showToast("回覆已刪除！");
         }
@@ -2199,10 +1733,8 @@
             if(!container) return;
             container.innerHTML = "";
 
-            // 判斷是否為「最高管理員 (主密碼)」
             const isSuperAdmin = (currentAccountId === "master");
             
-            // 只要不是主密碼，就嚴格過濾只能看到「自己這組帳號發出的留言」
             const filteredFeedbacks = isSuperAdmin
                 ? feedbacks
                 : feedbacks.filter(fb => fb.authorId === currentAccountId || fb.author === currentRole);
@@ -2212,7 +1744,6 @@
                 return;
             }
 
-            // 是否擁有官方回覆與刪除按鈕的權限
             const isAdmin = isSuperAdmin && activePermissions.includes('feedback_admin');
 
             filteredFeedbacks.forEach(fb => {
@@ -2300,6 +1831,102 @@
             setTimeout(() => {
                 toast.className = `fixed top-6 right-6 glass-panel py-3 px-6 rounded-2xl shadow-2xl flex items-center gap-2 text-sm text-emerald-400 border border-emerald-500/30 transform -translate-y-20 opacity-0 transition-all duration-300 z-[100]`;
             }, 3000);
+        }
+
+        // ================= 倒數計時 =================
+        function initCountdown() {
+            let targetTitle = localStorage.getItem('class827_countdown_title');
+            let targetDateStr = localStorage.getItem('class827_countdown_date');
+
+            if (!targetDateStr || targetTitle === "距離定期考查二" || targetTitle === "距離段考還有" || targetTitle === "距離段考" || targetTitle !== "116年國中教育會考") {
+                targetTitle = "116年國中教育會考";
+                targetDateStr = "2027-05-15";
+                localStorage.setItem('class827_countdown_title', targetTitle);
+                localStorage.setItem('class827_countdown_date', targetDateStr);
+            }
+
+            const titleEl = document.getElementById('countdown-title');
+            const targetEventTitleEl = document.getElementById('target-event-title');
+            const targetEventDateEl = document.getElementById('target-event-date');
+            
+            if (titleEl) titleEl.textContent = `${targetTitle} 還有`;
+            if (targetEventTitleEl) targetEventTitleEl.value = targetTitle;
+            if (targetEventDateEl) targetEventDateEl.value = targetDateStr;
+
+            startCountdown(targetDateStr);
+        }
+
+        function startCountdown(dateStr) {
+            if (countdownInterval) clearInterval(countdownInterval);
+
+            function updateTime() {
+                try {
+                    const cleanDateStr = dateStr.replace(/-/g, '/');
+                    const target = new Date(cleanDateStr + " 00:00:00");
+                    const now = new Date();
+                    let diff = target - now;
+
+                    const daysEl = document.getElementById('countdown-days');
+                    const hoursEl = document.getElementById('countdown-hours');
+                    const minutesEl = document.getElementById('countdown-minutes');
+                    const secondsEl = document.getElementById('countdown-seconds');
+                    
+                    if (!daysEl || !hoursEl || !minutesEl || !secondsEl) return;
+
+                    if (isNaN(diff) || diff <= 0) {
+                        daysEl.textContent = "00";
+                        hoursEl.textContent = "00";
+                        minutesEl.textContent = "00";
+                        secondsEl.textContent = "00";
+                        return;
+                    }
+
+                    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+                    const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                    const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+                    const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+                    daysEl.textContent = String(days).padStart(2, '0');
+                    hoursEl.textContent = String(hours).padStart(2, '0');
+                    minutesEl.textContent = String(minutes).padStart(2, '0');
+                    secondsEl.textContent = String(seconds).padStart(2, '0');
+                } catch(e) {}
+            }
+            updateTime();
+            countdownInterval = setInterval(updateTime, 1000);
+        }
+
+        function openCountdownModal() {
+            const modal = document.getElementById('countdown-modal');
+            if(modal) modal.classList.remove('opacity-0', 'pointer-events-none');
+        }
+
+        function closeCountdownModal() {
+            const modal = document.getElementById('countdown-modal');
+            if(modal) modal.classList.add('opacity-0', 'pointer-events-none');
+        }
+
+        function saveCountdownConfig() {
+            const title = document.getElementById('target-event-title').value.trim();
+            const date = document.getElementById('target-event-date').value;
+
+            if (!title || !date) {
+                showToast("請填寫事件名稱與正確日期！", "rose-400");
+                return;
+            }
+
+            localStorage.setItem('class827_countdown_title', title);
+            localStorage.setItem('class827_countdown_date', date);
+            
+            if (!isSyncing && isCloudReady) {
+                pushToCloud('countdown', { title: title, date: date });
+            }
+
+            const titleEl = document.getElementById('countdown-title');
+            if(titleEl) titleEl.textContent = `${title} 還有`;
+            startCountdown(date);
+            closeCountdownModal();
+            showToast("倒數目標已更新！");
         }
     </script>
 </body>
